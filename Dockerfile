@@ -1,7 +1,9 @@
 FROM debian
 
 # list of available versions: http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/
-ENV SWARM_VERSION=2.0
+ENV \
+    SWARM_VERSION=2.0 \
+    K8S_VERSION=1.1.3
 
 RUN \
     export DEBIAN_FRONTEND=noninteractive && \
@@ -12,6 +14,8 @@ RUN \
     apt-get update && \
     apt-get -y install docker-engine && \
     curl -o /swarm.jar http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_VERSION}/swarm-client-${SWARM_VERSION}-jar-with-dependencies.jar && \
+    wget https://storage.googleapis.com/kubernetes-release/release/v${K8S_VERSION}/bin/linux/amd64/kubectl -O /usr/local/bin/kubectl && \
+chmod +x /usr/local/bin/kubectl && \
     rm -f /var/cache/apt/archives/*.deb /var/cache/apt/archives/partial/*.deb /var/cache/apt/*.bin
 
 CMD java -jar /swarm.jar -username $JENKINS_USERNAME -password $JENKINS_APIKEY -labels 'docker swarm'
