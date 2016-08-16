@@ -2,8 +2,8 @@ FROM debian
 
 # list of available versions: http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/
 ENV \
-    SWARM_VERSION=2.0 \
-    K8S_VERSION=1.1.3 \
+    SWARM_VERSION=2.2 \
+    K8S_VERSION=1.3.5 \
     DOCKERSQUASH_VERSION=0.2.0
 
 RUN \
